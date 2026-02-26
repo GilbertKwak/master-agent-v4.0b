@@ -1,0 +1,74 @@
+# Master Agent System V4.0-B Configuration
+
+# API Settings
+api:
+  anthropic:
+    model: "claude-opus-4-20250514"
+    max_tokens_master: 4096
+    max_tokens_worker: 8192
+  
+  temperature:
+    master: 0.1   # Low for strategic consistency
+    worker: 0.3   # Higher for creative research
+
+# Memory Settings
+memory:
+  project_memory_dir: "./data/project_memories"
+  enable_external_memory: true
+  summary_max_chars: 1000
+
+# Lifecycle Settings
+lifecycle:
+  enable_ephemeral_workers: true
+  retirement_strategy: "immediate"  # "immediate" or "lazy"
+  max_parallel_workers: 4
+
+# Quality Assurance
+quality:
+  enable_3tier_validation: true
+  
+  l1_self_check:
+    min_citations: 2
+    validate_ranges: true
+    validate_sources: true
+  
+  l2_cross_validation:
+    contradiction_tolerance: 0
+    enable_numerical_check: true
+    enable_claim_check: true
+  
+  l3_iam_sdai:
+    threshold: 0.85
+    dimensions:
+      - impact
+      - accuracy
+      - coverage
+      - diversity
+      - depth
+      - integration
+
+# Performance
+performance:
+  timeouts:
+    worker_execution: 60
+    total_execution: 600
+  
+  context_window:
+    max_size: 200000
+    buffer_size: 10000
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  log_project_memory: true
+  log_quality_checks: true
+  log_dir: "./logs"
+
+# Monitoring
+monitoring:
+  enable_metrics: true
+  metrics_port: 8000
+  alert_thresholds:
+    slow_response_seconds: 50
+    low_quality_score: 0.80
+    high_bug_rate: 0.01
